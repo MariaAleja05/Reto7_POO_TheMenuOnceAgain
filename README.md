@@ -15,7 +15,7 @@ class Producto:
 
     def __str__(self):
         # Return a string representation of the product
-        return f'{self.nombre}: ${self.precio}'
+        return str(self.nombre) + str(" :") + str(self.precio)
 
 
 class Menu:
@@ -31,7 +31,7 @@ class Menu:
         # Display the menu with the list of products
         print("\n--- Menu ---")
         for idx, producto in enumerate(self.productos, 1):
-            print(f'{idx}. {producto}')
+            print(str(idx) + str(producto))
 
     def obtener_producto(self, numero):
         # Get a product from the menu by its number
@@ -58,7 +58,7 @@ class Pedido:
             subtotal = producto.precio * cantidad
             print(f'{producto.nombre} x {cantidad} = ${subtotal}')
             total += subtotal
-        print(f'\nTotal to pay: ${total}')
+        print(str("\nTotal to pay: $") + str(total))
         return total
 
     def __iter__(self):
@@ -106,7 +106,7 @@ class Tarjeta(MedioPago):
 
     def pagar(self, monto):
         # Print payment confirmation with card number (last 4 digits)
-        print(f"Paying ${monto:.2f} with card {self.numero[-4:]}")
+        print(str("Paying $ ") + str(monto) + str(" with card: ") + str(self.numero[-4:]))
 
 
 class Efectivo(MedioPago):
@@ -118,9 +118,9 @@ class Efectivo(MedioPago):
     def pagar(self, monto):
         # Handle payment with cash and provide change or insufficient funds message
         if self.monto_entregado >= monto:
-            print(f"Payment made in cash. Change: ${self.monto_entregado - monto:.2f}")
+            print(str("Payment made in cash. Change: $") + str(self.monto_entregado - monto))
         else:
-            print(f"Insufficient funds. ${monto - self.monto_entregado:.2f} needed to complete the payment.")
+            print(str("Insufficient funds. $") + str(monto - self.monto_entregado) + str(" needed to complete the payment."))
 
 
 class Restaurante:
@@ -149,7 +149,7 @@ class Restaurante:
                 break
             producto = self.menu.obtener_producto(opcion)
             if producto:
-                cantidad = int(input(f'How many {producto.nombre} do you want?: '))
+                cantidad = int(input(str("How many ") + str(producto.nombre) + str(" do you want?: ")))
                 self.pedido.agregar_item(producto, cantidad)
             else:
                 print("Invalid option, please try again.")
@@ -188,5 +188,5 @@ if __name__ == '__main__':
 
     print("\n--- Iterating over the order items ---")
     for producto, cantidad in restaurante.pedido:
-        print(f'{producto.nombre} x {cantidad}')
+        print(str(producto.nombre) + str(" x ") + str(cantidad))
 ```
